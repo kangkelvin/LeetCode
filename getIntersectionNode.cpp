@@ -38,3 +38,34 @@ public:
         return NULL;
     }
 };
+
+
+
+///////////// METHOD 2: HASH TABLE ////////////////////
+#include <stdio.h>
+#include <unordered_set>
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA == NULL || headB == NULL) return NULL;
+        
+        ListNode *nodeA = headA;
+        ListNode *nodeB = headB;
+        bool solutionFound = false;
+        
+        std::unordered_set<ListNode*> setA;
+        
+        while (nodeA != NULL) {
+            setA.insert(nodeA);
+            nodeA = nodeA->next;
+        }
+        
+        while (nodeB != NULL) {
+            if (setA.find(nodeB) != setA.end()) return nodeB;
+            nodeB = nodeB->next;
+        }
+        
+        return NULL;
+    }
+};
