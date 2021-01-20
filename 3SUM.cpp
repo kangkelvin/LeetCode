@@ -40,3 +40,50 @@ public:
         return output;
     }
 };
+
+// O(n^2)
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        std::vector<std::vector<int>> output;
+        std::set<vector<int>> set;
+        
+        std::unordered_map<int, int> hash;
+        for (auto num:nums) {
+            if (hash.find(num) == hash.end()) {
+                hash[num] = 1;
+            } else {
+                hash[num]++;
+            }
+        }
+        
+        // for (auto pair:hash) {
+        //     std::cout << pair.first << " " << pair.second << "\n";
+        // }
+        
+        for (auto &num1:hash) {
+            if (num1.second < 1) continue;
+            num1.second--;
+            for (auto &num2:hash) {
+                if (num2.second < 1) continue;
+                num2.second--;
+                int keyToFind = -(num1.first + num2.first);
+                auto it = hash.find(keyToFind);
+                if (it != hash.end() && it->second > 0) {
+                    vector<int> vec = {num1.first, num2.first, it->first};
+                    std::sort(vec.begin(), vec.end());
+                    if (set.find(vec) == set.end()) {
+                        set.insert(vec);
+                    }
+                }
+                num2.second++;
+            }
+            num1.second++;
+        }
+        
+        for (auto vec:set) {
+            output.push_back(vec);
+        }
+        return output;
+    }
+};
