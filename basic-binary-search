@@ -1,0 +1,31 @@
+    int binarySearchRecursive(vector<int>& nums, int low, int high, int target) {       
+        if (high >= low) {
+            int mid = low + (high - low) / 2;
+            
+            if (nums[mid] == target) {
+            return mid;
+            } else if (nums[mid] > target) {
+                return binarySearchRecursive(nums, low, mid - 1, target);
+            } else {
+                return binarySearchRecursive(nums, mid + 1, high, target);
+            }
+        }
+        
+        return -1;
+    }
+    
+    int binarySearchIterative(vector<int>& nums, int low, int high, int target) {
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        
+        return -1;
+    }
